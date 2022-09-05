@@ -7,7 +7,7 @@
       shell: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 682853443183.dkr.ecr.us-east-1.amazonaws.com
 
     - name: Pull Docker-Image
-      shell: docker pull 682853443183.dkr.ecr.us-east-1.amazonaws.com/java:3
+      shell: docker pull 682853443183.dkr.ecr.us-east-1.amazonaws.com/java:5
 
 
     - name: Remove Running Containers
@@ -15,4 +15,4 @@
       ignore_errors: true
 
     - name: Run Container with Docker-Image
-      shell: docker run -d --name=spring -p 8080:8080 682853443183.dkr.ecr.us-east-1.amazonaws.com/java:3
+      shell: docker run -d --name=spring -p 8080:8080 682853443183.dkr.ecr.us-east-1.amazonaws.com/java:5
