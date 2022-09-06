@@ -1,0 +1,32 @@
+---
+- name: CD Playbook
+  hosts: all
+  become: yes
+  tasks:
+    - name: Login to ECR
+      shell: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 682853443183.dkr.ecr.us-east-1.amazonaws.com
+
+    - name: Pull Docker-Image
+      shell: docker pull 682853443183.dkr.ecr.us-east-1.amazonaws.com/java:1
+
+    - name: Copy Deployment files
+      copy: >
+        src=regapp-deploy.yml
+        dest=/tmp/regapp-deploy.yml
+        owner=root
+        group=root
+        mode=0644
+
+    - name: Copy Service files
+      copy: >
+        src=regapp-service.yml
+        dest=/tmp/regapp-service.yml
+        owner=root
+        group=root
+        mode=0644
+
+    - name: Deploy on Kube app
+      shell: kubectl apply -f /tmp/regapp-deploy.yml
+
+    - name: Enable Service
+      shell: kubectl apply -f /tmp/regapp-service.yml
