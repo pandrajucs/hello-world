@@ -7,7 +7,7 @@ resource "aws_instance" "k8s_server" {
   key_name                    = "AWS"
   subnet_id                   = "subnet-0882f799e47d9f14e"
   associate_public_ip_address = true
-  vpc_security_group_ids      = "sg-076e6a71a275bf359"
+  vpc_security_group_ids      = ["sg-076e6a71a275bf359"]
   user_data                   = file("script.sh")
   tags = {
     "Name" = "K8S-Server"
