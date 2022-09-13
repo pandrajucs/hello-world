@@ -33,6 +33,15 @@ pipeline{
                        }
                 }
         }
+        stage('Terraform Init'){
+            steps{
+                sh 'terraform init'
+                sh 'terraform validate'
+                sh 'terraform apply --auto-approve'
+                sh 'terraform state list'
+                sh 'sleep 300s'
+            }
+        }
         stage('Pull Docker-Image to K8S-Sever and Run Deployment'){
             steps{
                 ansiblePlaybook become: true, credentialsId: 'ansible', inventory: 'inventory', playbook: 'k8s.yml'
